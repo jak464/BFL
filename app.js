@@ -1,60 +1,77 @@
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+var session = require('express-session')
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var handlebars = require('express-handlebars');
+var passport = require('passport');
+var GoogleOAuth2Strategy = require('passport-google-auth').Strategy;
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}))
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// setup handlebars view engine
+app.engine('handlebars',
+    handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
+
+// static resources
+app.use(express.static(__dirname + '/public'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+// Routing
+var routes = require('./routes/index');
 app.use('/', routes);
-app.use('/users', users);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function(req, res) {
+    res.status(404);
+    res.render('404View');
 });
 
-// error handlers
+// passport stuff
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.  However, since this example does not
+//   have a database of user records, the complete Google profile is serialized
+//   and deserialized.
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
 });
 
 
-module.exports = app;
+// Use the GoogleStrategy within Passport.
+//   Strategies in passport require a `validate` function, which accept
+//   credentials (in this case, an OpenID identifier and profile), and invoke a
+//   callback with a user object.
+passport.use(new GoogleOAuth2Strategy({
+        clientId: '196998886710-3ss4oknnivkch49uberej4ncsr0e9hj4.apps.googleusercontent.com',
+        clientSecret: 'bNCsChLla_mkQqEeYGlCCNnE',
+        callbackURL: 'http://localhost:3000/auth/google/return',
+    },
+    function(accessToken, refreshToken, profile, done) {
+        // To keep the example simple, the user's Google profile is returned to
+        // represent the logged-in user.  In a typical application, you would want
+        // to associate the Google account with a user record in your database,
+        // and return that user instead.
+        return done(null, profile);
+    }
+));
+
+app.listen(3000, function(){
+    console.log('http://localhost:3000');
+});
