@@ -1,5 +1,34 @@
-
+</br>
+</br>
+</br>
+</br>
+</br>
 <div class="container">
-    <h3>create league</h3>
-    <a href="/login">Home></a>
+    <h3>Create League</h3>
+
+    <div class="table-responsive">
+        <form method="post" action="/createLeague">
+            <table class="table table-condensed">
+                <tbody>
+                <tr>
+                    <th width="200">League Name:</th>
+                    <td><input type="text" name="leagueName" required>
+                </tr>
+                </tbody>
+                <tfooter>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" value="Save & Next"
+                                   class="btn btn-success">
+                            <input type="button" value="Cancel"
+                                   class="btn btn-danger" onclick="cancelAdd()">
+                        </td>
+                    </tr>
+                </tfooter>
+            </table>
+        </form>
+    </div>
+
+
 </div>

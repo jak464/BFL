@@ -3,5 +3,6 @@
  */
 module.exports =
     function manageLeague(req , res){
-        res.render('manageLeagueView');
+        res.render('manageLeagueView', {
+            user: req.user});
     };

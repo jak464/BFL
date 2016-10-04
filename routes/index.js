@@ -3,22 +3,33 @@ var router = express.Router();
 
 // other modules
 var createLeague = require("./createLeague");
+var createLeagueView = require("./createLeagueView");
+var createLeagueRules = require("./createLeagueRules");
+var createLeagueRulesView = require("./createLeagueRulesView");
 var findLeague = require("./findLeague");
-var manageLeague = require("./manageLeague");
+var findLeagueView = require("./findLeagueView");
+var manageLeagueView = require("./manageLeagueView");
+var loginView = require("./loginView");
 var passport = require('passport');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('homeView');
+  res.render('homeView', {user: req.user});
 });
 
-router.get('/createLeague', createLeague);
+router.get('/createLeagueView', createLeagueView);
+router.post('/createLeague', createLeague);
+router.get('/createLeagueRuleView', ensureAuthenticated, createLeagueRulesView);
+router.post('/createLeagueRules', createLeagueRules);
+router.get('/findLeagueView', findLeagueView);
 router.get('/findLeague', findLeague);
-router.get('/manageLeague', ensureAuthenticated, manageLeague);
+router.get('/manageLeagueView', ensureAuthenticated, manageLeagueView);
+router.get('/loginView', loginView);
 
-router.get('/login', function(req, res){
-    res.render('loginView', { user: req.user });
-});
+
+//router.get('/login', function(req, res){
+//    res.render('loginView', { user: req.user });
+//});
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -39,7 +50,7 @@ router.get('/auth/google',
 router.get('/auth/google/return',
     passport.authenticate('google'),
     function(req, res) {
-        res.redirect('/manageLeague');
+        res.render('homeView', { user: req.user });
     });
 
 router.get('/logout', function(req, res){

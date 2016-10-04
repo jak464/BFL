@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');
 var passport = require('passport');
 var GoogleOAuth2Strategy = require('passport-google-auth').Strategy;
+var User = require('./schemaDb').getOwnerModel();
 
 var app = express();
 
@@ -68,7 +69,9 @@ passport.use(new GoogleOAuth2Strategy({
         // represent the logged-in user.  In a typical application, you would want
         // to associate the Google account with a user record in your database,
         // and return that user instead.
-        return done(null, profile);
+        User.findOrCreate({emailAddress: profile.emails[0].value}, function(err, user) {
+            done(null, user)
+        })
     }
 ));
 

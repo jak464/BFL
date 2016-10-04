@@ -1,34 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assignment 3</title>
-    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
-    <script src="/javascripts/clickActions.js"
-            type="text/javascript"></script>
-</head>
-<body>
-<div class="container">
-    <div class="jumbotron">
-        <h2>Bachelor Fantasy League</h2>
-    </div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <nav class="navbar navbar-dark bg-inverse">
-        <ul class="nav navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/findLeague">Find League</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/createLeague">Create League</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/manageLeague">Manage League (Admins)</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+    <title>Bachelor Fantasy League</title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="/javascripts/clickActions.js" type="text/javascript"></script>
+    <script src="/javascripts/addRules.js" type="text/javascript"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
+
+
+    <!-- Theme CSS -->
+    <link href="/stylesheets/creative.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
+
+</head>
+<body id="page-top">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" color="black">Bachelor Fantasy League</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/findLeagueView">Find a League</a>
+                </li>
+                {{#unless user}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/loginView">Login (Admins)</a>
+                    </li>
+                {{/unless}}
+                {{#if user}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/createLeagueView">Create a League</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/manageLeagueView">Manage Your League</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                {{/if}}
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
 {{{body}}}
 </body>
 </html>
