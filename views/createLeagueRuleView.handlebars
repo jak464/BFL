@@ -1,71 +1,37 @@
-</br>
-</br>
-</br>
-</br>
-</br>
 <div class="container">
     <h3>Create League Rules</h3>
     <h4>Input your rules for your league here. Once you save them, you cannot edit them</h4>
 
     <div class="row clearfix">
         <div class="col-md-8 column">
-            <table class="table table-bordered table-hover" id="tab_logic">
-                <thead>
-                <tr >
-                    <th class="text-center">
-                        Rule Description
-                    </th>
-                    <th class="text-center">
-                        Rule Points
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr id='addr0'>
-                    <td>
-                        <input type="text" name='ruleName'  placeholder='Fight With Another Contestant' class="form-control"/>
-                    </td>
-                    <td>
-                        <input type="text" name='rulePoints' placeholder='5' class="form-control"/>
-                    </td>
-                </tr>
-                <tr id='addr1'></tr>
-                </tbody>
-            </table>
-            <a id="save" class="btn btn-primary pull-left">Save All Rules</a>
-            <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-            <a id="add_row" class="pull-right btn btn-default">Add a Rule</a>
-        </div>
-    </div>
-
-
-
-    <!--
-        <form method="post" action="/createLeagueRules">
-            <table class="table table-condensed">
-                <tbody>
-                <tr>
-                    <th width="200">League Rule:</th>
-                    <td><input type="text" name="leagueRule" required>
-                </tr>
-                <tr>
-                <th width="200">Rule Points:</th>
-                    <td><input type="text" name="rulePoints" required>
-                </tr>
-                </tbody>
-                <tfooter>
-                    <tr>
-                        <td></td>
+            <form method="post" action="/createLeagueRules">
+                <table class="table table-bordered table-hover" id="tab_logic">
+                    <thead>
+                    <tr >
+                        <th class="text-center">
+                            Rule Description
+                        </th>
+                        <th class="text-center">
+                            Rule Points
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr id='addr0'>
                         <td>
-                            <input type="submit" value="Save & Next"
-                                   class="btn btn-success">
-                            <input type="button" value="Cancel"
-                                   class="btn btn-danger" onclick="cancelAdd()">
+                            <input type="text" name='ruleName'  placeholder='Fight With Another Contestant' class="form-control"/>
+                        </td>
+                        <td>
+                            <input type="text" name='rulePoints' placeholder='5' class="form-control"/>
                         </td>
                     </tr>
-                </tfooter>
-            </table>
-        </form> -->
-
-
+                    <tr id='addr1'></tr>
+                    </tbody>
+                </table>
+                <input type="submit" id="save" class="btn btn-primary pull-left" value="Save All Rules" />
+                <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+                <a id="add_row" class="pull-right btn btn-default">Add a Rule</a>
+            </form>
+        </div>
+    </div>
 </div>

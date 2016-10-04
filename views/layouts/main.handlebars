@@ -25,6 +25,7 @@
     <link rel='stylesheet' href='/stylesheets/bootstrap.css'/>
 
 </head>
+
 <body id="page-top">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
@@ -63,6 +64,14 @@
                     </li>
                 {{/if}}
             </ul>
+
+            <!-- FIRST time navigation for an admin - LOGIN link only
+                WHEN login is complete - only see CREATE a LEAGUE TAB
+                WHEN returning and a league is created for the admin - then ONLY see a MANAGE LEAGUE tab which will have only the admins 1 and only league
+
+                FOR EVERYONE ELSE - just view table of all leagues in FIND a league
+            -->
+
         </div>
         <!-- /.navbar-collapse -->
     </div>
