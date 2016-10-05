@@ -13,11 +13,14 @@ module.exports =
             leagueOwner: req.user._id
         });
 
-        league.save(function (err){
+        league.save(function (err, league){
             if(err) {
                 console.log("Error: %s ", err);
             }
-            res.render('createLeagueRuleView', {user: req.user});
+            res.render('createLeagueRuleView', {
+                user: req.user, 
+                leagueId: league._id
+            });
         });
 
     };

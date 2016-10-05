@@ -6,9 +6,15 @@ var createLeague = require("./createLeague");
 var createLeagueView = require("./createLeagueView");
 var createLeagueRules = require("./createLeagueRules");
 var createLeagueRulesView = require("./createLeagueRulesView");
-var findLeague = require("./findLeague");
 var findLeagueView = require("./findLeagueView");
 var manageLeagueView = require("./manageLeagueView");
+var joinLeague = require("./joinLeague");
+var joinLeagueView = require("./joinLeagueView");
+var leagueDetailView = require("./leagueDetailView");
+var draftPicksView = require("./draftPicksView");
+var draftPicks = require("./draftPicks");
+
+
 var loginView = require("./loginView");
 var passport = require('passport');
 
@@ -20,16 +26,16 @@ router.get('/', function(req, res) {
 router.get('/createLeagueView', createLeagueView);
 router.post('/createLeague', createLeague);
 router.get('/createLeagueRuleView', ensureAuthenticated, createLeagueRulesView);
-router.post('/createLeagueRules', createLeagueRules);
+router.post('/createLeagueRules/:leagueId', createLeagueRules);
 router.get('/findLeagueView', findLeagueView);
-router.get('/findLeague', findLeague);
+router.get('/joinLeagueView/:id', joinLeagueView);
+router.post('/joinLeague/:id', joinLeague);
 router.get('/manageLeagueView', ensureAuthenticated, manageLeagueView);
 router.get('/loginView', loginView);
+router.get('/leagueDetailView/:id', leagueDetailView);
+router.get('/draftPicksView/:memberId', draftPicksView);
+router.post('/draftPicks/:memberId', draftPicks);
 
-
-//router.get('/login', function(req, res){
-//    res.render('loginView', { user: req.user });
-//});
 
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -50,6 +56,7 @@ router.get('/auth/google',
 router.get('/auth/google/return',
     passport.authenticate('google'),
     function(req, res) {
+
         res.render('homeView', { user: req.user });
     });
 

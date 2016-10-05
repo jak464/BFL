@@ -3,16 +3,45 @@
  */
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
-var LeagueRules = DB.getLeagueRulesModel();
+var LeagueRule = DB.getLeagueRulesModel();
 
 module.exports =
     function createLeagueRules(req , res) {
-        var name = req.body;
+        var i = 0;
+        var ruleArray = [];
 
-        League.findOne({"leagueOwner" : req.user._id},function (err, league) {
-            if (err) return handleError(err);
-            console.log(league._id);
-        });
+        while(true) {
+            var leagueRule = null;
+            var rulePoints = null;
+
+            if(i == 0) {
+                leagueRule = req.body.ruleName;
+                rulePoints = req.body.rulePoints;
+            }
+            else {
+                leagueRule = req.body["ruleName"+i];
+                rulePoints = req.body["rulePoints"+i]
+            }
+
+            if(leagueRule || rulePoints) {
+                ruleArray.push(new LeagueRule({leagueRule: leagueRule, rulePoints: rulePoints, leagueId: req.params.leagueId}));
+                i++;
+            }
+            else {
+                break;
+            }
+        }
+
+        var insertCounter = 0;
+        var numRules = ruleArray.length;
+        for(var i in ruleArray) {
+            ruleArray[i].save(function(err) {
+                insertCounter++;
+                if (insertCounter == numRules) {
+                    res.render("homeView", {user: req.user});
+                }
+            });
+        }
 
     }
 // run through all the parameters and get them 2 at a time

@@ -32,12 +32,45 @@ var leagueRulesSchema = new Schema({
     rulePoints: Number
 });
 
+var bachelorContestantSchema = new Schema({
+    name: String,
+    occupation: String,
+    age: Number,
+    description: String
+});
+
+var draftPickSchema = new Schema({
+    contestant: String,
+    leagueMemberName: String
+});
+
+var episodeSchema = new Schema({
+    leagueId: String,
+    episodeNumber: Number
+});
+
+var episodeScoringSchema = new Schema({
+    episodeId: String,
+    leagueRule: String,
+    contestant: String
+});
+
+var contestantScoreSchema = new Schema({
+    //i'm unsure of the whole scoring schema
+    contestantScore: String,
+    episodeId: String
+});
+
 
 var ownerModel = null;
 var leagueModel = null;
 var leagueMemberModel = null;
 var leagueRulesModel = null;
-
+var bachelorContestantModel = null;
+var draftPickModel = null;
+var episodeModel = null;
+var episodeScoringModel = null;
+var contestantScoreModel = null;
 
 module.exports = {
     getOwnerModel: function getModel() {
@@ -52,7 +85,6 @@ module.exports = {
         if (connection == null) {
             console.log("Creating connection and league model...");
             connection = mongoose.createConnection(dbUrl);
-
         }
         leagueModel = connection.model("LeagueModel", leagueSchema);
         return leagueModel;
@@ -61,18 +93,57 @@ module.exports = {
         if (connection == null) {
             console.log("Creating connection and league player model...");
             connection = mongoose.createConnection(dbUrl);
-
         }
         leagueMemberModel = connection.model("LeagueMemberModel", leagueMemberSchema);
         return leagueMemberModel;
     },
     getLeagueRulesModel: function getModel() {
         if (connection == null) {
-            console.log("Creating connection and league player model...");
+            console.log("Creating connection and league rules model...");
             connection = mongoose.createConnection(dbUrl);
-
         }
         leagueRulesModel = connection.model("LeagueRulesModel", leagueRulesSchema);
         return leagueRulesModel;
+    },
+    getBachelorContestantModel: function getModel() {
+        if (connection == null) {
+            console.log("Creating connection and bachelor contestants model...");
+            connection = mongoose.createConnection(dbUrl);
+        }
+        bachelorContestantModel = connection.model("BachelorContestantModel", bachelorContestantSchema);
+        return bachelorContestantModel;
+    },
+    getDraftPickModel: function getModel() {
+        if (connection == null) {
+            console.log("Creating connection and draft pick model...");
+            connection = mongoose.createConnection(dbUrl);
+        }
+        draftPickModel = connection.model("DraftPickModel", draftPickSchema);
+        return draftPickModel;
+    },
+    getEpisodeModel: function getModel() {
+        if (connection == null) {
+            console.log("Creating connection and episode model...");
+            connection = mongoose.createConnection(dbUrl);
+        }
+        episodeModel = connection.model("EpisodeModel", episodeSchema);
+        return episodeModel;
+    },
+    getEpisodeScoringModel: function getModel() {
+        if (connection == null) {
+            console.log("Creating connection and episode scoring model...");
+            connection = mongoose.createConnection(dbUrl);
+        }
+        episodeScoringModel = connection.model("EpisodeScoringModel", episodeScoringSchema);
+        return episodeScoringModel;
+    },
+    getContesantScoreModel: function getModel() {
+        if (connection == null) {
+            console.log("Creating connection and episode scoring model...");
+            connection = mongoose.createConnection(dbUrl);
+        }
+        contestantScoreModel = connection.model("ContestantScoreModel", contestantScoreSchema);
+        return contestantScoreModel;
     }
+
 }
