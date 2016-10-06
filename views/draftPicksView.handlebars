@@ -1,14 +1,25 @@
-<h2>WHY DRAFT PICKS</h2>
+<h2>Draft your Picks Here</h2>
 
 <div class="container">
-<h5>pick here</h5>
+    <form method="post" action="/draftPicks/{{leagueMemberId}}">
+        <select multiple class="customBackground form-control" id='testbox' name="selectBox" style="height: 300px">
+            {{#each data}}
+                <option value='{{this.id}}'>{{this.name}}</option>
+            {{/each}}
+        </select>
+
+        <input type="submit" value="Save Draft Picks"
+               class="btn btn-success">
+
+    </form>
 </div>
 
 
+<h2>Use Table to Help Determine Draft Picks!</h2>
+<div class="panel panel-success">
+    <div class="panel-heading">Contestants!</div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Panel heading without title</div>
-    <div class="panel-body">
+    <div class="panel-body" id="customBackground">
         <div class="table-responsive">
             <table class="table table-condensed">
                 <thead>

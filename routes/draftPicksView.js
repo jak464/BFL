@@ -5,7 +5,7 @@ var DB = require('../schemaDb');
 var Contestant = DB.getBachelorContestantModel();
 
 module.exports =
-    function displayLeagues(req , res){
+    function draftPicksView(req , res){
         var leagueMemberId = req.params.memberId;
 
         Contestant.find({}, function(err , contestants){
@@ -14,6 +14,7 @@ module.exports =
             }
             var results = contestants.map(function (contestant){
                 return {
+                    id: contestant._id,
                     name: contestant.name,
                     occupation: contestant.occupation,
                     age: contestant.age,

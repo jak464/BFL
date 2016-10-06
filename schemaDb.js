@@ -40,8 +40,8 @@ var bachelorContestantSchema = new Schema({
 });
 
 var draftPickSchema = new Schema({
-    contestant: String,
-    leagueMemberName: String
+    contestantId: String,
+    leagueMemberId: String
 });
 
 var episodeSchema = new Schema({
