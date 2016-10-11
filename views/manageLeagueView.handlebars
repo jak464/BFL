@@ -1,3 +1,86 @@
 <div class="container">
     <h3>manage league</h3>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        Episode 1</a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">  <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <form method="post" action="/createLeagueRules/{{leagueId}}">
+                            <table class="table table-bordered table-hover" id="tab_logic">
+                                <thead>
+                                <tr >
+                                    <th class="text-center">
+                                        Contestant
+                                    </th>
+                                    <th class="text-center">
+                                        Rule Description
+                                    </th>
+                                    <th class="text-center">
+                                        Rule Points
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr id='manage0'>
+                                    <td>
+
+                                        <select name="contestants" id="contestants" class="form-control">
+                                         {{#each data}}
+                                             <option value={{this.id}}>{{this.name}}</option>
+                                        {{/each}}
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" name='ruleName'class="form-control"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" name='rulePoints' class="form-control"/>
+                                    </td>
+                                </tr>
+                                <tr id='manage1'></tr>
+                                </tbody>
+                            </table>
+                            <input type="submit" id="save" class="btn btn-primary pull-left" value="Save All Rules" />
+                            <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+                            <a id="add_row" class="pull-right btn btn-default">Add a Contestant</a>
+                        </form>
+                    </div>
+                </div></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                        Episode 2</a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.</div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        Episode 3</a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat.</div>
+            </div>
+        </div>
+    </div>
 </div>

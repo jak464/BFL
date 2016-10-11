@@ -44,19 +44,3 @@ module.exports =
         }
 
     }
-// run through all the parameters and get them 2 at a time
-
-/**
- * var arr = // array of objects;
- res = [];
-
- arr.forEach(function (item) {
-    item.save(function (err) {
-        res.push(err);
-        if (res.length === arr.length)
-        {
-            // Done
-        }
-    });
-});
- */

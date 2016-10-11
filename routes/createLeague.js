@@ -4,6 +4,7 @@
 
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
+var Episode = DB.getEpisodeModel();
 
 module.exports =
     function createLeague(req , res){
@@ -16,6 +17,15 @@ module.exports =
         league.save(function (err, league){
             if(err) {
                 console.log("Error: %s ", err);
+            }
+
+
+            for(var i = 1; i < 6; i ++ ) {
+                var episode = new Episode({
+                    leagueId: league._id,
+                    episodeNumber: i
+                })
+                episode.save();
             }
             res.render('createLeagueRuleView', {
                 user: req.user, 
