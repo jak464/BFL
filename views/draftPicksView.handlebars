@@ -1,46 +1,54 @@
-<h2>Draft your Picks Here</h2>
+
 
 <div class="container">
-    <form method="post" action="/draftPicks/{{leagueMemberId}}">
+    <h3>Draft your Picks Here</h3>
+
+    <div class="row">
+    <div class="col-md-4">
+        <form method="post" action="/draftPicks/{{leagueMemberId}}">
         <select multiple class="customBackground form-control" id='testbox' name="selectBox" style="height: 300px">
             {{#each data}}
                 <option value='{{this.id}}'>{{this.name}}</option>
             {{/each}}
         </select>
-
+        <br>
         <input type="submit" value="Save Draft Picks"
                class="btn btn-success">
 
-    </form>
+    </form></div>
 </div>
+</div>
+<br>
+<br>
+
+<div class="container whiteBackground">
+    <h2>Use this Table to Help Determine Your Draft Picks!</h2>
 
 
-<h2>Use Table to Help Determine Draft Picks!</h2>
-<div class="panel panel-success">
-    <div class="panel-heading">Contestants!</div>
-
-    <div class="panel-body" id="customBackground">
-        <div class="table-responsive">
-            <table class="table table-condensed">
-                <thead>
+    <div class="table-responsive">
+        <table class="table table-condensed customBackground">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Bachelor Contestant Name</th>
+                <th>Age</th>
+                <th>Occupation</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each data}}
                 <tr>
-                    <th>Bachelor Contestant Name</th>
-                    <th>Age</th>
-                    <th>Occupation</th>
-                    <th>Description</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.occupation}}</td>
+                    <td>{{this.age}}</td>
+                    <td>{{this.description}}</td>
                 </tr>
-                </thead>
-                <tbody>
-                {{#each data}}
-                    <tr>
-                        <td>{{this.name}}</td>
-                        <td>{{this.occupation}}</td>
-                        <td>{{this.age}}</td>
-                        <td>{{this.description}}</td>
-                    </tr>
-                {{/each}}
-                </tbody>
-            </table>
-        </div>
+            {{/each}}
+            </tbody>
+        </table>
     </div>
+
+
+
+
 </div>

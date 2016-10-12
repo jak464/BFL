@@ -45,7 +45,8 @@ template {
 }
 
 #customBackground {
-  background-color: #ffd27f;
+  background-color: #FFE9EC
+;
 }
 a {
   background-color: transparent;
@@ -268,6 +269,15 @@ th {
     border: 1px solid #ddd !important;
   }
 }
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
 @font-face {
   font-family: 'Glyphicons Halflings';
 
@@ -4863,7 +4873,7 @@ a.badge:focus {
   padding: 30px 15px;
   margin-bottom: 30px;
   color: inherit;
-  background-color: #eee;
+  background-color: #FFFFFF;
 }
 .jumbotron h1,
 .jumbotron .h1 {

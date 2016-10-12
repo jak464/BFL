@@ -1,12 +1,28 @@
 /**
- * Created by jackie on 10/1/16.
+ * Created by jackie on 10/11/16.
  */
-
-
 
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 var Episode = DB.getEpisodeModel();
+var BachelorContestant = DB.getBachelorContestantModel();
+var LeagueRule = DB.getLeagueRulesModel();
+var EpisodeScore = DB.getEpisodeScoringModel();
+
+
+// here the goal is to save the episode scoring objects based on 
+// what the admin entered
+// they sent the contestant - rule in ONE row
+// they are sending multiple rows
+// how do we parse what they are sending and save it to the DB. 
+
+
+// we need to loop through the managei objects and get 
+
+// in order to get episode ID 
+// loop through all the episodes that are returned from the fetch method
+
+
 
 module.exports =
     function createLeague(req , res){
@@ -30,7 +46,7 @@ module.exports =
                 episode.save();
             }
             res.render('createLeagueRuleView', {
-                user: req.user, 
+                user: req.user,
                 leagueId: league._id
             });
         });

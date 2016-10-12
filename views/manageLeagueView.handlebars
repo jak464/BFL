@@ -1,17 +1,33 @@
 <div class="container">
-    <h3>manage league</h3>
+    <h2>Manage Your League - {{leagueName}}</h2>
+
     <div class="panel-group" id="accordion">
+    {{#each episodeRuleMap}}
+        {{@index}}: {{this}}
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                        Episode 1</a>
+                        Episode {{@index}}</a>
                 </h4>
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
                 <div class="panel-body">  <div class="row clearfix">
                     <div class="col-md-12 column">
-                        <form method="post" action="/createLeagueRules/{{leagueId}}">
+                        <form method="post" action="/manageLeague/{{leagueId}}">
+
+                                <select id="contestantsSelect" class="form-control" style="display:none;">
+                                    {{#each contestants}}
+                                        <option value={{this.id}} {{#if_equals this.id @../contestant }}selected{{/if_equals}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+
+                                <select id="leagueRulesSelect" class="form-control" style="display:none;">
+                                    {{#each leagueRules}}
+                                        <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}} points</option>
+                                    {{/each}}
+                                </select>
+
                             <table class="table table-bordered table-hover" id="tab_logic">
                                 <thead>
                                 <tr >
@@ -24,28 +40,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr id='manage0'>
-                                    <td>
+                                {{#each this}}
+                                    <tr id='manage0'>
+                                        <td>
 
-                                        <select name="contestants" id="contestants" class="form-control">
-                                         {{#each contestants}}
-                                             <option value={{this.id}}>{{this.name}}</option>
-                                        {{/each}}
-                                        </select>
-                                    </td>
-                                    <td>
-
-                                        <select name="leagueRules" id="leagueRules" class="form-control">
-                                            {{#each leagueRules}}
-                                                <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}} points</option>
+                                            <select name="contestants" id="contestants" class="contestants form-control">
+                                             {{#each contestants}}
+                                                 <option value={{this.id}} {{#if_equals this.id @../contestant }}selected{{/if_equals}}>{{this.name}}</option>
                                             {{/each}}
-                                        </select>
-                                    </td>
-                                </tr>
+                                            </select>
+                                        </td>
+                                        <td>
+
+                                            <select name="leagueRules" id="leagueRules" class=" leagueRulesform-control">
+                                                {{#each leagueRules}}
+                                                    <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}} points</option>
+                                                {{/each}}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                {{/each}}
                                 <tr id='manage1'></tr>
                                 </tbody>
                             </table>
-                            <input type="submit" id="save" class="btn btn-primary pull-left" value="Save All Rules" />
+                            <input type="submit" id="save" class="btn btn-primary pull-left" value="Save Episode Data" />
                             <a id='delete_contestant_row' class="pull-right btn btn-default">Delete Row</a>
                             <a id="add_contestant_row" class="pull-right btn btn-default">Add a Contestant</a>
                         </form>
@@ -53,33 +71,8 @@
                 </div></div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                        Episode 2</a>
-                </h4>
-            </div>
-            <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.</div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                        Episode 3</a>
-                </h4>
-            </div>
-            <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.</div>
-            </div>
-        </div>
+
+    {{/each}}
+
     </div>
 </div>

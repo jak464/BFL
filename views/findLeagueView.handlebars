@@ -1,10 +1,15 @@
-
-    <div class="container">
+<br>
+<br>
+<br>
+    <div class="container whiteBackground">
+        <h3>Bachelor Fantasy League List</h3>
+        <h4>Join a League to Draft Your Picks!</h4>
+        <br>
+        <br>
         <div class="table-responsive">
             <table class="table table-condensed">
-                <thead>
+                <thead class="thead-inverse">
                 <tr>
-                    <th>Id</th>
                     <th>League Name</th>
                     <th>League Owner</th>
                     <th></th>
@@ -13,8 +18,7 @@
                 <tbody>
                 {{#each data}}
                     <tr>
-                        <td><a href="/leagueDetailView/{{this.id}}">{{this.id}}</a></td>
-                        <td>{{this.leagueName}}</td>
+                        <td><a href="/leagueDetailView/{{this.id}}">{{this.leagueName}}</a></td>
                         <td>{{this.leagueOwner}}</td>
                         </td>
                         <td>

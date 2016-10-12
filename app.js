@@ -14,10 +14,19 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
-
 // setup handlebars view engine
 app.engine('handlebars',
-    handlebars({defaultLayout: 'main'}));
+    handlebars({defaultLayout: 'main',
+        helpers: { //this will help when displaying results in a table: records can start at index 1 instead of 0
+            if_equals: function (a, b, opts) {
+                if(a == b)
+                    return opts.fn(this);
+                else
+                    return opts.inverse(this);
+            },
+        }
+    }));
+
 app.set('view engine', 'handlebars');
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).

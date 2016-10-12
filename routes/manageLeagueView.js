@@ -10,6 +10,7 @@ var EpisodeScore = DB.getEpisodeScoringModel();
 module.exports = function manageLeague(req, res) {
 
     var leagueId;
+    var leagueName;
     var contestantsModel = [];
     var episodes = [];
     var leagueRulesModel = [];
@@ -22,6 +23,7 @@ module.exports = function manageLeague(req, res) {
                     if (err) return callback(err);
 
                     leagueId = league._id;
+                    leagueName = league.leagueName;
 
                     callback();
                 });
@@ -31,6 +33,9 @@ module.exports = function manageLeague(req, res) {
                     if (err) return callback(err);
 
                     episodes = episodesResult;
+                    for (var i in episodesResult) {
+                        episodeMap[episodesResult[i].episodeNumber] = [];
+                    }
 
                     callback();
                 });
@@ -40,7 +45,7 @@ module.exports = function manageLeague(req, res) {
                     return e._id;
                 });
 
-                EpisodeScore.find({episodeId: episodeIds}, function (err, scores) {
+                EpisodeScore.find({episodeId: {$in: episodeIds}}, function (err, scores) {
 
                     // creating property called episodeNumber
                     // we populate this by searching the episodes that have the same episode as the score
@@ -58,10 +63,10 @@ module.exports = function manageLeague(req, res) {
                     for (var score in scores) {
                         episodeMap[score.episodeNumber].push(score);
                     }
-                    /*
+                    /* the structure of episode map will loop like 
                         episodeMap = [
                             1: [
-                                {League Rule, Contestent, Episode Id},
+                                {League Rule, Contestant, Episode Id},
                                 {League Rule, Contestent, Episode Id}
                             ],
                             2: [{League Rule, Contestent, Episode Id}],
@@ -111,6 +116,8 @@ module.exports = function manageLeague(req, res) {
                 contestants: contestantsModel,
                 episodeRuleMap: episodeMap,
                 leagueRules: leagueRulesModel,
+                leagueId: leagueId,
+                leagueName: leagueName,
                 user: req.user
             });
         }
