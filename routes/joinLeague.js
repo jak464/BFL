@@ -1,6 +1,7 @@
-/**
- * Created by jackie on 10/4/16.
- */
+// this module will save a league member
+// to a league that they have selected to join
+// it will redirect them to draft their picks for the league they just joined
+
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 var LeagueMember = DB.getLeagueMemberModel();

@@ -1,11 +1,10 @@
-/**
- * Created by jackie on 10/4/16.
- */
+// this module will return a view for the league member to join a league.
+
 var DB = require('../schemaDb');
 var LeagueRules = DB.getLeagueRulesModel();
 
 module.exports =
-    function displayLeagues(req , res){
+    function joinLeagues(req , res){
         var leagueId = req.params.id;
 
         LeagueRules.find({leagueId: leagueId}, function(err , leagueRules){

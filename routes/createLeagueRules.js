@@ -1,6 +1,6 @@
-/**
- * Created by jackie on 10/2/16.
- */
+// this module will create the admin's league rules
+// it will create the the rules associated with the league Id
+
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 var LeagueRule = DB.getLeagueRulesModel();
@@ -10,6 +10,8 @@ module.exports =
         var i = 0;
         var ruleArray = [];
 
+        // req.body will have 1 to many ruleName/rulePoints
+        // loop through to push it to a rule array so we can create the league rule document for insertion
         while(true) {
             var leagueRule = null;
             var rulePoints = null;
@@ -35,6 +37,7 @@ module.exports =
         var insertCounter = 0;
         var numRules = ruleArray.length;
         for(var i in ruleArray) {
+            // save the league rules and render the view when done
             ruleArray[i].save(function(err) {
                 insertCounter++;
                 if (insertCounter == numRules) {

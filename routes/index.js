@@ -8,13 +8,13 @@ var createLeagueRules = require("./createLeagueRules");
 var createLeagueRulesView = require("./createLeagueRulesView");
 var findLeagueView = require("./findLeagueView");
 var manageLeagueView = require("./manageLeagueView");
-var manageLeague = require("./manageLeague");
 var joinLeague = require("./joinLeague");
 var joinLeagueView = require("./joinLeagueView");
 var leagueDetailView = require("./leagueDetailView");
 var draftPicksView = require("./draftPicksView");
 var draftPicks = require("./draftPicks");
-//var leagueAlreadyCreatedView = require("./leagueAlreadyCreatedView");
+var enterEpisodeScoreView = require("./enterEpisodeScoreView");
+var saveEpisodeScore = require("./saveEpisodeScore");
 var loginView = require("./loginView");
 
 var passport = require('passport');
@@ -32,12 +32,12 @@ router.get('/findLeagueView', findLeagueView);
 router.get('/joinLeagueView/:id', joinLeagueView);
 router.post('/joinLeague/:id', joinLeague);
 router.get('/manageLeagueView', ensureAuthenticated, manageLeagueView);
-router.post('/manageLeague/:id', ensureAuthenticated, manageLeague);
 router.get('/loginView', loginView);
 router.get('/leagueDetailView/:id', leagueDetailView);
 router.get('/draftPicksView/:memberId', draftPicksView);
 router.post('/draftPicks/:memberId', draftPicks);
-//router.get('/leagueAlreadyCreatedView', leagueAlreadyCreatedView);
+router.get('/enterEpisodeScoreView/:leagueId/:episodeId', ensureAuthenticated, enterEpisodeScoreView);
+router.post('/saveEpisodeScore/:leagueId/:episodeId', ensureAuthenticated, saveEpisodeScore);
 
 
 

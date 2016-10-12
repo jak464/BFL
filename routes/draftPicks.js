@@ -1,6 +1,6 @@
-/**
- * Created by jackie on 10/4/16.
- */
+// this module saves the contestants that the league
+// member has drafted. the league member should draft 5 picks
+
 var DB = require('../schemaDb');
 var Contestant = DB.getBachelorContestantModel();
 var DraftPick = DB.getDraftPickModel();

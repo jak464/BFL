@@ -1,6 +1,5 @@
-/**
- * Created by jackie on 10/2/16.
- */
+// this module returns the complete list of bachelor fantasy leagues
+// so that the user will have the ability to join the league in the view
 
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();

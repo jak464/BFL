@@ -77,3 +77,19 @@ bachelorContestant = new BachelorContestant({
     description: "Emma is recently divorced trying to get back into the dating game"
 })
 bachelorContestant.save();
+
+bachelorContestant = new BachelorContestant({
+    name: "Laura Lavoie",
+    occupation: "Systems Analyst",
+    age: 35,
+    description: "Laura Lavoie is a systems analyst at Liberty Mutual. She is a marathon runner in her spare time"
+})
+bachelorContestant.save();
+
+bachelorContestant = new BachelorContestant({
+    name: "Lauren Sharma",
+    occupation: "Real Estate Developer",
+    age: 37,
+    description: "Lauren is a real estate agent who's passion is selling houses. She loves horses, trees and girl scout cookies"
+})
+bachelorContestant.save();

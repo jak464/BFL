@@ -1,6 +1,8 @@
-/**
- * Created by jackie on 10/2/16.
- */
+// this module returns a view for the admin to
+// create a league. An admin can only have one league
+// so if one exists already, then it renders a view that tells
+// the admin they already have a view and they should go to manage it
+
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 

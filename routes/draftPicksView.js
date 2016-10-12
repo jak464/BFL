@@ -1,6 +1,7 @@
-/**
- * Created by jackie on 10/4/16.
- */
+// this module will return a view for the league member
+// to draft their 5 league picks
+// it returns the contestants for selection
+
 var DB = require('../schemaDb');
 var Contestant = DB.getBachelorContestantModel();
 

@@ -1,16 +1,16 @@
-/**
- * Created by jackie on 10/4/16.
- */
-
+// this module returns score details and members of a selected league
 
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 
-// this is where i want to display all the members and the score
-
 module.exports =
     function displayLeagueDetail(req, res) {
         var id = req.params.id;
+
+        // once we have the scoring data, we also want to display
+        // the league member Ids associated to that league and their score
+
+        // query leaguePlayers by leagueId - display the player name and the score
 
         League.findById(id, function (err, league){
             if(err)
