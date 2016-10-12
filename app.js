@@ -5,7 +5,7 @@ var handlebars = require('express-handlebars');
 var passport = require('passport');
 var GoogleOAuth2Strategy = require('passport-google-auth').Strategy;
 var User = require('./schemaDb').getOwnerModel();
-var contestants = require('./createContestants');
+//var contestants = require('./createContestants');
 
 var app = express();
 

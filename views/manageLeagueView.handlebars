@@ -19,10 +19,7 @@
                                         Contestant
                                     </th>
                                     <th class="text-center">
-                                        Rule Description
-                                    </th>
-                                    <th class="text-center">
-                                        Rule Points
+                                        Rule Description & Points
                                     </th>
                                 </tr>
                                 </thead>
@@ -31,24 +28,26 @@
                                     <td>
 
                                         <select name="contestants" id="contestants" class="form-control">
-                                         {{#each data}}
+                                         {{#each contestants}}
                                              <option value={{this.id}}>{{this.name}}</option>
                                         {{/each}}
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" name='ruleName'class="form-control"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" name='rulePoints' class="form-control"/>
+
+                                        <select name="leagueRules" id="leagueRules" class="form-control">
+                                            {{#each leagueRules}}
+                                                <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}} points</option>
+                                            {{/each}}
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr id='manage1'></tr>
                                 </tbody>
                             </table>
                             <input type="submit" id="save" class="btn btn-primary pull-left" value="Save All Rules" />
-                            <a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-                            <a id="add_row" class="pull-right btn btn-default">Add a Contestant</a>
+                            <a id='delete_contestant_row' class="pull-right btn btn-default">Delete Row</a>
+                            <a id="add_contestant_row" class="pull-right btn btn-default">Add a Contestant</a>
                         </form>
                     </div>
                 </div></div>

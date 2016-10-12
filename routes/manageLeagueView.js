@@ -1,4 +1,4 @@
-var async = requre('async')
+var async = require('async')
 var DB = require('../schemaDb');
 var BachelorContestant = DB.getBachelorContestantModel();
 var LeagueRule = DB.getLeagueRulesModel();
@@ -10,11 +10,13 @@ var EpisodeScore = DB.getEpisodeScoringModel();
 module.exports = function manageLeague(req, res) {
 
     var leagueId;
-    var contestantsModel;
-    var episodes;
-    var leagueRules;
+    var contestantsModel = [];
+    var episodes = [];
+    var leagueRulesModel = [];
+    var episodeMap = [];
 
     async.series([
+            // get the league of the current user
             function (callback) {
                 League.findOne({leagueOwner: req.user._id}, function (err, league) {
                     if (err) return callback(err);
@@ -23,6 +25,7 @@ module.exports = function manageLeague(req, res) {
 
                     callback();
                 });
+            // use the league ID to get the associated episodes to the league
             }, function (callback) {
                 Episode.find({leagueId: leagueId}, function (err, episodesResult) {
                     if (err) return callback(err);
@@ -31,6 +34,7 @@ module.exports = function manageLeague(req, res) {
 
                     callback();
                 });
+            // get the episode score records for the episode where ep.epId = score.epId
             }, function (callback) {
                 var episodeIds = episodes.map(function(e) {
                     return e._id;
@@ -38,16 +42,8 @@ module.exports = function manageLeague(req, res) {
 
                 EpisodeScore.find({episodeId: episodeIds}, function (err, scores) {
 
-                    // we have the episode from the previous function
-                    // now that we have the scores, we put the episode# on the score itself
-                    // because we need the episode # to display on the UI.
-                    // to do that we loop through the scores, add CREATING property called episodeNumber
-                    // and set that equal to the particular episode that is equal to the episode iD on the score
-
-
                     // creating property called episodeNumber
                     // we populate this by searching the episodes that have the same episode as the score
-
                     scores = scores.map(function(score) {
                        score.episodeNumber = episodes.filter(function(e) {
                            return e._id = score.episodeId;
@@ -56,17 +52,9 @@ module.exports = function manageLeague(req, res) {
                        })[0];
                     });
 
-                    var episode;
-                    for (var i = 0; i < episodes.length; i++) {
-                        if (episodes[i].episodeId == 234234) {
-                            episode = episodes[i];
-                        }
-                    }
-
                     // map of episode numbers and each array element will contain an array of episode scores
-                    // so basically on UI, loop through episode map so you can loop through the numbres and
+                    // so basically on UI, loop through episode map so you can loop through the numbers and
                     // within each number, loop through the episode scores
-                    var episodeMap = [];
                     for (var score in scores) {
                         episodeMap[score.episodeNumber].push(score);
                     }
@@ -100,20 +88,29 @@ module.exports = function manageLeague(req, res) {
                     callback();
                 });
             }, function (callback) {
+                console.log(leagueId);
+
                 LeagueRule.find({leagueId: leagueId}, function (err, leagueRules) {
                     if (err) return callback(err);
 
-                    leagueRules = leagueRules.map(function (leagueRule) {
+                    console.log(leagueRules);
+
+                    leagueRulesModel = leagueRules.map(function (leagueRule) {
                         return {
+                            leagueRuleId: leagueRule._id,
                             leagueRule: leagueRule.leagueRule,
                             rulePoints: leagueRule.rulePoints
                         }
                     });
+                    
+                    callback();
 
                 });
             }], function (err) {
             res.render('manageLeagueView', {
-                data: contestantsModel,
+                contestants: contestantsModel,
+                episodeRuleMap: episodeMap,
+                leagueRules: leagueRulesModel,
                 user: req.user
             });
         }
