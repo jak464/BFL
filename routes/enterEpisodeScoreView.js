@@ -1,3 +1,7 @@
+// need to return existing data
+// but also need to return drop downs for contestant and league rules for new inputted data.
+
+
 var async = require('async')
 var DB = require('../schemaDb');
 var BachelorContestant = DB.getBachelorContestantModel();
@@ -6,25 +10,20 @@ var League = DB.getLeagueModel();
 var Episode = DB.getEpisodeModel();
 var EpisodeScore = DB.getEpisodeScoringModel();
 
-// select the rules, contestant score for the specific episode ID
-/* the structure of episode map will loop like
- episodeScore is like =
- {League Rule, Contestant, Episode Id},
- {League Rule, Contestant, Episode Id} */
-module.exports = function getSetEpisodeScore(req, res) {
 
-    // need to return existing data
-    // but also need to return drop downs for contestant and league rules for new inputted data.
+module.exports = function getSetEpisodeScore(req, res) {
 
     var leagueId = req.params.leagueId;
     var episodeId = req.params.episodeId;
+    var episodeNumber;
     var episodeScoreModel = [];
     var contestantsModel = [];
     var leagueRulesModel = [];
 
+    // get all of the episode scores for the leagueID and the episodeId
     async.series([
         function(callback) {
-            EpisodeScore.find({episodeId: req.params.episodeId}, function (err, episodeScores) {
+            EpisodeScore.find({episodeId: episodeId}, function (err, episodeScores) {
                 if (err) {
                     console.log("Error : %s ", err);
                 }
@@ -39,7 +38,18 @@ module.exports = function getSetEpisodeScore(req, res) {
                 callback();
             });
         },
-            function (callback) {
+        function(callback) {
+            Episode.findOne({_id: episodeId}, function (err, episode) {
+                if (err) {
+                    console.log("Error : %s ", err);
+                }
+                episodeNumber = episode.episodeNumber;
+
+
+                callback();
+            });
+        },
+        function (callback) {
                 BachelorContestant.find({}, function (err, contestants) {
                     if (err) return callback(err);
 
@@ -53,12 +63,8 @@ module.exports = function getSetEpisodeScore(req, res) {
                     callback();
                 });
             }, function (callback) {
-                console.log(leagueId);
-
                 LeagueRule.find({leagueId: leagueId}, function (err, leagueRules) {
                     if (err) return callback(err);
-
-                    console.log(leagueRules);
 
                     leagueRulesModel = leagueRules.map(function (leagueRule) {
                         return {
@@ -72,7 +78,10 @@ module.exports = function getSetEpisodeScore(req, res) {
 
                 });
             }], function (err) {
-            res.render('manageLeagueView', {
+            res.render('enterEpisodeScoreView', {
+                episodeScores: episodeScoreModel,
+                episodeNumber: episodeNumber,
+                episodeId: episodeId,
                 contestants: contestantsModel,
                 leagueRules: leagueRulesModel,
                 leagueId: leagueId,

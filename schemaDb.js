@@ -58,7 +58,8 @@ var episodeScoringSchema = new Schema({
 var contestantScoreSchema = new Schema({
     //i'm unsure of the whole scoring schema
     contestantScore: String,
-    episodeId: String
+    episodeId: String,
+    contestantId: String
 });
 
 

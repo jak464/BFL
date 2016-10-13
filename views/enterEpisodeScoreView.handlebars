@@ -1,35 +1,22 @@
 <!-- TO DO -- need to find a way to loop through the data from episodeScore and display the default selection if not found -->
-
+<br>
+<br>
+<br>
 <div class="panel-group" id="accordion">
 
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                    Episode </a>
+                    Episode {{episodeNumber}}</a>
             </h4>
         </div>
-
 
         <div id="collapse1" class="panel-collapse collapse in">
             <div class="panel-body">
                 <div class="row clearfix">
                     <div class="col-md-12 column">
-                        <form method="post" action="/saveEpisodeId/{{leagueId}}/{{episodeId}}">
-
-                            <select id="contestantsSelect" class="form-control" style="display:none;">
-                                {{#each contestants}}
-                                    <option value={{this.id}} {{#if_equals this.id @../contestant }}selected{{/if_equals}}>{{this.name}}</option>
-                                {{/each}}
-                            </select>
-
-                            <select id="leagueRulesSelect" class="form-control" style="display:none;">
-                                {{#each leagueRules}}
-                                    <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}}
-                                        points
-                                    </option>
-                                {{/each}}
-                            </select>
+                        <form method="post" action="/saveEpisodeScore/{{leagueId}}/{{episodeId}}">
 
                             <table class="table table-bordered table-hover" id="tab_logic">
                                 <thead>
@@ -42,36 +29,54 @@
                                     </th>
                                 </tr>
                                 </thead>
+
+
                                 <tbody>
-                                {{#each episodeScore}}
-                                    {{@index}}: {{this}}
+                                <select id="contestantsSelect" class="form-control" style="display:none;">
+                                    {{#each contestants}}
+                                        <option value={{this.id}} {{#if_equals this.id @../contestant }}selected{{/if_equals}}>{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+
+                                <select id="leagueRulesSelect" class="form-control" style="display:none;">
+                                    {{#each leagueRules}}
+                                        <option value={{this.leagueRuleId}}>{{this.leagueRule}} - {{this.rulePoints}}
+                                            points
+                                        </option>
+                                    {{/each}}
+                                </select>
+
+
+                                {{#each episodeScores}}
                                     <tr id='manage0'>
                                         <td>
-
-                                            <select name="contestants" id="contestants" class="contestants form-control">
-                                                {{#each contestants}}
-                                                    <option value={{this.id}} {{#if_equals this.id @../contestant }}selected{{/if_equals}}>{{this.name}}</option>
+                                            <select class="form-control" disabled >
+                                                {{#each ../contestants}}
+                                                    <option value={{this.id}} {{#if_equals this.id ../contestant }}selected{{/if_equals}}>{{this.name}}</option>
                                                 {{/each}}
                                             </select>
                                         </td>
+
                                         <td>
-
-                                            <select name="leagueRules" id="leagueRules" class=" leagueRulesform-control">
-                                                {{#each leagueRules}}
-                                                    <option value={{this.leagueRuleId}}>{{this.leagueRule}}
-                                                        - {{this.rulePoints}} points
-                                                    </option>
+                                            <select class="form-control" disabled>
+                                                {{#each ../leagueRules}}
+                                                    <option value={{this.leagueRuleId}} {{#if_equals this.leagueRuleId ../leagueRule}}selected{{/if_equals}}>{{this.leagueRule}} - {{this.rulePoints}} points </option>
                                                 {{/each}}
                                             </select>
                                         </td>
+
                                     </tr>
+
                                 {{/each}}
                                 <tr id='manage1'></tr>
+
                                 </tbody>
                             </table>
+                           {{#unless episodeScores}}
                             <input type="submit" id="save" class="btn btn-primary pull-left" value="Save Episode Data"/>
                             <a id='delete_contestant_row' class="pull-right btn btn-default">Delete Row</a>
                             <a id="add_contestant_row" class="pull-right btn btn-default">Add a Contestant</a>
+                            {{/unless}}
                         </form>
                     </div>
                 </div>

@@ -13,7 +13,6 @@ var Episode = DB.getEpisodeModel();
 
 module.exports = function saveEpisodeScore(req, res) {
 
-    // these two params come from the UI
     var leagueId = req.params.leagueId;
     var episodeId = req.params.episodeId;
 
@@ -21,62 +20,63 @@ module.exports = function saveEpisodeScore(req, res) {
     var contestantsModel = [];
     var leagueRulesModel = [];
 
+    console.log(req.body);
+
     async.series([
             function(callback) {
-                EpisodeScore.find({episodeId: req.params.episodeId}, function (err, episodeScores) {
-                    if (err) {
-                        console.log("Error : %s ", err);
+
+                var i = 1;
+                var episodeScoringArray = [];
+
+                // req.body will have 1 to many ruleName/rulePoints
+                // loop through to push it to a rule array so we can create the league rule document for insertion
+                while(true) {
+                    var contestant = null;
+                    var leagueRule = null;
+
+
+                    contestant = req.body["contestants"+i];
+                    leagueRule = req.body["leagueRules"+i]
+
+
+                    if(contestant || leagueRule) {
+                        episodeScoringArray.push(new EpisodeScore({episodeId: episodeId, leagueRule: leagueRule, contestant: contestant}));
+                        i++;
                     }
-
-
-                    // if an episode score episode exists already - then we update the values
-                    // is there any way to make this read only and only return read only data so we don't have to deal with
-                    // need to find where contestant = contestant then update. this seems like a really bad idea
-
-
-
-                    // if an episode score does not exist for the episode Id, we create episode score documents
-                    if(!episodeScores) {
-                        // loop through selectBoxContestant & selectBoxLeagueRule
-                        // push it to an array
-                        // create the objects
-                        // after the objects are created
-                        // we need to aggregate by the contestant and update contestant score for the episode id
-                        // after we update the contestant score, we need to update the leaguePlayer score based on their draft picks
+                    else {
+                        break;
                     }
+                }
 
-
-                    episodeScoreModel = episodeScores.map(function (episodeScore) {
-                        return {
-                            id: episodeScore._id,
-                            episodeId: episodeScore.episodeId,
-                            leagueRule: episodeScore.leagueRule,
-                            contestant: episodeScore.contestant
-                        }
+                var insertCounter = 0;
+                console.log(episodeScoringArray);
+                for(var i in episodeScoringArray) {
+                        // save the episode scoring document and render the view when done
+                        episodeScoringArray[i].save(function(err) {
+                        insertCounter++;
                     });
-                    callback();
-                });
-            },
-            function (callback) {
-                BachelorContestant.find({}, function (err, contestants) {
-                    if (err) return callback(err);
+                }
+                episodeScoreModel = episodeScoringArray;
 
-                    contestantsModel = contestants.map(function (contestant) {
-                        return {
-                            id: contestant._id,
-                            name: contestant.name
-                        }
-                    });
+                callback();
 
-                    callback();
-                });
-            }, function (callback) {
-                console.log(leagueId);
+            }
+
+        // GO FROM EPISODE SCORING --> then you need to select ALL of the contestant.
+        // i think that you should...... uh......sigh.......uhmm......ok......so you save all the episode scores
+        // i think you have to select all the league rules based on the leagueRuleId and then using that
+        // you have to loop through the ...... episodeScoringTable and like.... create the contestant score object
+        // based off of the ........ episodeId
+        // why is
+
+        // you basically need to do an IN MEMORY JOIN OF LeagueRule and Episode Scoring based on LeagueRuleId
+
+        // once you have that, you can like loop through that combined object, rule points on this and um......
+        // build up this object so its like........ for each episodeId and each contestantId, add on the rule points that you get.
+            , function (callback) {
 
                 LeagueRule.find({leagueId: leagueId}, function (err, leagueRules) {
                     if (err) return callback(err);
-
-                    console.log(leagueRules);
 
                     leagueRulesModel = leagueRules.map(function (leagueRule) {
                         return {
@@ -85,12 +85,61 @@ module.exports = function saveEpisodeScore(req, res) {
                             rulePoints: leagueRule.rulePoints
                         }
                     });
+                    console.log('The leagueId ' + leagueId);
+
+                    console.log('The leagueRulesModel ' + leagueRulesModel);
+
+
+                    var leagueRuleIdToPoints = [];
+                    for (var i in leagueRulesModel) {
+                        console.log('i  ' + i);
+                        console.log('leagueRUleModel subbi ' + leagueRulesModel[i].leagueRuleId);
+                        console.log('leagueRUleModel rule points ' + leagueRulesModel[i].rulePoints);
+                        leagueRuleIdToPoints[leagueRulesModel[i].leagueRuleId] = leagueRulesModel[i].rulePoints;
+                    }
+
+                    console.log('The leagueRuleIdToPoints ' + leagueRuleIdToPoints[leagueRulesModel[0].leagueRuleId]);
+
+                    // join leagueRuleModels and episodeScoring
+                    episodeScoreModel = episodeScoreModel.map(function(episode) {
+                        episode.rulePoints = leagueRuleIdToPoints[episode.leagueRule];
+                        return episode;
+                    });
+                    console.log('The ep score model ' + episodeScoreModel[0]);
+
+
+                    var contestantScores = [];
+                    for (var i in episodeScoreModel) {
+                        if (!contestantScores[episodeScoreModel[i].contestant]) {
+                            contestantScores[episodeScoreModel[i].contestant] = episodeScoreModel[i].rulePoints;
+                        } else {
+                            contestantScores[episodeScoreModel[i].contestant] += episodeScoreModel[i].rulePoints;
+                        }
+                    }
+                    console.log('contestantSCores' + contestantScores);
+
+
+                    var contestantScoreModel = [];
+                    for (var i in contestantScores) {
+                        contestantScoreModel.push(new ContestantScore({
+                            contestantScore: contestantScores[i],
+                            contestantId: i,
+                            episodeId: episodeId
+                        }));
+                    }
+
+                    console.log('contestantScoreModel' + contestantScoreModel);
+
+
+                    for (var i in contestantScoreModel) {
+                        contestantScoreModel[i].save();
+                    }
 
                     callback();
 
                 });
             }], function (err) {
-            res.render('manageLeagueView', {
+            res.render('homeView', {
                 contestants: contestantsModel,
                 leagueRules: leagueRulesModel,
                 leagueId: leagueId,

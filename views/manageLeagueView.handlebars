@@ -4,7 +4,7 @@
 
     <ul class="list-group">
         {{#each episodes}}
-            <a href="enterEpisodeScoreView/{{leagueId}}/{{episodeId}}"><li class="list-group-item">Episode {{episodeNumber}}</li></a>
+            <a href="/enterEpisodeScoreView/{{../leagueId}}/{{this.id}}"><li class="list-group-item">Episode {{this.episodeNumber}}</li></a>
         {{/each}}
     </ul>
 
