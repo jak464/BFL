@@ -38,12 +38,22 @@ module.exports = function displayEpisodeList(req, res) {
                 });
             }], function (err) {
             // return the manageLeagueView displaying the episodes associated to the league
-            res.render('manageLeagueView', {
-                episodes: episodesModel,
-                leagueId: leagueId,
-                leagueName: leagueName,
-                user: req.user
-            });
+            if(leagueId) {
+                res.render('manageLeagueView', {
+                    episodes: episodesModel,
+                    leagueId: leagueId,
+                    leagueName: leagueName,
+                    user: req.user
+                });
+            }
+            // if admin clicks manage league and they haven't created one yet, display a view that indicates that
+            else {
+                res.render('leagueNotCreatedView', {
+                    episodes: episodesModel,
+                    user: req.user
+                });
+            }
+
         }
     );
 };

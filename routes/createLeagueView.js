@@ -18,8 +18,8 @@ module.exports =
                     id: league._id
                 }
             });
-            
-            if(results.length < 0) {
+            console.log(!results.length);
+            if(results.length == 0) {
                 res.render('createLeagueView', {
                     user: req.user});
             }
