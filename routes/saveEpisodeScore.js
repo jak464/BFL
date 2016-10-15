@@ -5,11 +5,8 @@
 var async = require('async')
 var DB = require('../schemaDb');
 var EpisodeScore = DB.getEpisodeScoringModel();
-//var BachelorContestant = DB.getBachelorContestantModel();
 var ContestantScore = DB.getContestantScoreModel();
 var LeagueRule = DB.getLeagueRulesModel();
-//var League = DB.getLeagueModel();
-//var Episode = DB.getEpisodeModel();
 var LeagueMember = DB.getLeagueMemberModel();
 var DraftPicks = DB.getDraftPickModel();
 

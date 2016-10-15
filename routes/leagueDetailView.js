@@ -2,29 +2,55 @@
 
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
+var LeagueMember = DB.getLeagueMemberModel();
+var async = require('async')
 
 module.exports =
     function displayLeagueDetail(req, res) {
         var id = req.params.id;
-
-        // once we have the scoring data, we also want to display
-        // the league member Ids associated to that league and their score
+        var leagueMemberModel = [];
+        var leagueModel = [];
+        var leagueName;
+        var leagueOwner;
 
         // query leaguePlayers by leagueId - display the player name and the score
+        async.series([
+                function (callback) {
+                    League.findById(id, function (err, league) {
+                        if (err)
+                            console.log("Error Selecting : %s ", err);
+                        if (!league) {
+                            return res.render('404View');
+                        }
+                        else {
+                            leagueName = league.leagueName;
+                            leagueOwner = league.leagueOwner;
+                        }
+                    });
+                    callback();
 
-        League.findById(id, function (err, league){
-            if(err)
-                console.log("Error Selecting : %s ", err);
-            if (!league) {
-                return res.render('404View');
-            }
-            else {
+                },
+                function (callback) {
+                    LeagueMember.find({leagueId: id}, function (err, leagueMembers) {
+                        if (err) return callback(err);
+
+                        leagueMemberModel = leagueMembers.map(function (leagueMember) {
+                            return {
+                                leagueMemberName: leagueMember.leagueMemberName,
+                                leagueMemberScore: leagueMember.leagueMemberScore
+                            };
+                        });
+
+                        callback();
+                    });
+                }], function (err) {
                 res.render('leagueDetailView', {
-                    leagueName: league.leagueName,
-                    leagueOwner: league.leagueOwner,
+                    leagueMembers: leagueMemberModel,
+                    leagueName: leagueName,
+                    leagueOwner: leagueOwner,
                     user: req.user
                 });
             }
-        });
+        );
     };
 

@@ -1,1 +1,28 @@
-<h2>{{leagueName}}</h2>
+
+<br>
+<br>
+<div class="container whiteBackground">
+    <h2>{{leagueName}}</h2>
+    <h4>Check back for your rankings after each episode</h4>
+    <br>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>League Member</th>
+                <th>Member Score</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each leagueMembers}}
+                <tr>
+                    <td>{{this.leagueMemberName}}</td>
+                    <td>{{this.leagueMemberScore}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

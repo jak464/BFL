@@ -6,7 +6,6 @@ var async = require('async')
 var DB = require('../schemaDb');
 var BachelorContestant = DB.getBachelorContestantModel();
 var LeagueRule = DB.getLeagueRulesModel();
-var League = DB.getLeagueModel();
 var Episode = DB.getEpisodeModel();
 var EpisodeScore = DB.getEpisodeScoringModel();
 
@@ -57,7 +56,7 @@ module.exports = function getSetEpisodeScore(req, res) {
                         return {
                             id: contestant._id,
                             name: contestant.name
-                        }
+                        };
                     });
 
                     callback();
