@@ -13,3 +13,14 @@ a {
 .whiteBackground {
   background-color: #FFFFFF;
 }
+
+.centerImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.h2Red {
+  font-size: 30px;
+  color: darkred;
+}

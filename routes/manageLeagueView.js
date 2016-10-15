@@ -16,10 +16,21 @@ module.exports = function displayEpisodeList(req, res) {
             // get the league of the current user
             function (callback) {
                 League.findOne({leagueOwner: req.user._id}, function (err, league) {
-                    if (err) return callback(err);
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    // if admin clicks manage league and they haven't created one yet, display a view that indicates that
+                    if(league == null) {
+                        res.render('leagueNotCreatedView', {
+                            user: req.user
+                        });
+                        return;
+                    }
 
                     leagueId = league._id;
                     leagueName = league.leagueName;
+
                     callback();
                 });
                 // get the episodes associated to the league
@@ -46,13 +57,7 @@ module.exports = function displayEpisodeList(req, res) {
                     user: req.user
                 });
             }
-            // if admin clicks manage league and they haven't created one yet, display a view that indicates that
-            else {
-                res.render('leagueNotCreatedView', {
-                    episodes: episodesModel,
-                    user: req.user
-                });
-            }
+
 
         }
     );

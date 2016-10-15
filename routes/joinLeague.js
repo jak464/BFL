@@ -12,6 +12,7 @@ module.exports =
 
         var leagueMember = new LeagueMember({
             leagueMemberName: req.body.leagueMemberName,
+            leagueMemberScore: 0,
             leagueId: leagueId
         })
 

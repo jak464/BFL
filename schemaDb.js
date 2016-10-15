@@ -56,8 +56,7 @@ var episodeScoringSchema = new Schema({
 });
 
 var contestantScoreSchema = new Schema({
-    //i'm unsure of the whole scoring schema
-    contestantScore: String,
+    contestantScore: Number,
     episodeId: String,
     contestantId: String
 });
@@ -138,7 +137,7 @@ module.exports = {
         episodeScoringModel = connection.model("EpisodeScoringModel", episodeScoringSchema);
         return episodeScoringModel;
     },
-    getContesantScoreModel: function getModel() {
+    getContestantScoreModel: function getModel() {
         if (connection == null) {
             console.log("Creating connection and episode scoring model...");
             connection = mongoose.createConnection(dbUrl);
