@@ -55,7 +55,6 @@ module.exports = function saveEpisodeScore(req, res) {
                 }
 
                 var insertCounter = 0;
-                //console.log(episodeScoringArray);
                 for (var i in episodeScoringArray) {
                     episodeScoringArray[i].save(function (err) {
                         insertCounter++;

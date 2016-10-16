@@ -40,7 +40,6 @@ router.get('/enterEpisodeScoreView/:leagueId/:episodeId', ensureAuthenticated, e
 router.post('/saveEpisodeScore/:leagueId/:episodeId', ensureAuthenticated, saveEpisodeScore);
 
 
-
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  The first step in Google authentication will involve redirecting

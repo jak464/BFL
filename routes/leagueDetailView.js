@@ -15,6 +15,7 @@ module.exports =
 
         // query leaguePlayers by leagueId - display the player name and the score
         async.series([
+                // get the league
                 function (callback) {
                     League.findById(id, function (err, league) {
                         if (err)
@@ -30,6 +31,7 @@ module.exports =
                     callback();
 
                 },
+                // get the league members associated to the league
                 function (callback) {
                     LeagueMember.find({leagueId: id}, function (err, leagueMembers) {
                         if (err) return callback(err);
@@ -42,7 +44,7 @@ module.exports =
                         });
 
                         callback();
-                    });
+                    }).sort({leagueMemberScore: 'descending'});
                 }], function (err) {
                 res.render('leagueDetailView', {
                     leagueMembers: leagueMemberModel,

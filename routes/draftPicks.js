@@ -16,7 +16,6 @@ var saveDraftPick = function(draftPick, index, length, callback) {
 
 module.exports = function saveDraftPicks(req , res){
     var leagueMemberId = req.params.memberId;
-    console.log(leagueMemberId);
 
     for(var i in req.body.selectBox) {
         var draftPick = new DraftPick({
