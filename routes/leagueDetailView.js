@@ -3,13 +3,16 @@
 var DB = require('../schemaDb');
 var League = DB.getLeagueModel();
 var LeagueMember = DB.getLeagueMemberModel();
+var LeagueRule = DB.getLeagueRulesModel();
+
+
 var async = require('async')
 
 module.exports =
     function displayLeagueDetail(req, res) {
         var id = req.params.id;
         var leagueMemberModel = [];
-        var leagueModel = [];
+        var leagueRulesModel = [];
         var leagueName;
         var leagueOwner;
 
@@ -31,6 +34,23 @@ module.exports =
                     callback();
 
                 },
+                // returns all of the league rules
+                function (callback) {
+                    LeagueRule.find({leagueId: id}, function (err, leagueRules) {
+                        if (err) return callback(err);
+
+                        leagueRulesModel = leagueRules.map(function (leagueRule) {
+                            return {
+                                leagueRuleId: leagueRule._id,
+                                leagueRule: leagueRule.leagueRule,
+                                rulePoints: leagueRule.rulePoints
+                            }
+                        });
+
+                        callback();
+
+                    });
+                },
                 // get the league members associated to the league
                 function (callback) {
                     LeagueMember.find({leagueId: id}, function (err, leagueMembers) {
@@ -50,6 +70,7 @@ module.exports =
                     leagueMembers: leagueMemberModel,
                     leagueName: leagueName,
                     leagueOwner: leagueOwner,
+                    leagueRules: leagueRulesModel,
                     user: req.user
                 });
             }

@@ -26,3 +26,31 @@
         </table>
     </div>
 </div>
+<br>
+<br>
+<br>
+<div class="container whiteBackground">
+    <h2>{{leagueName}}</h2>
+    <h4>Here are the rules for this league</h4>
+    <br>
+    <br>
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr>
+                <th>League Rule</th>
+                <th>Rule Points</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each leagueRules}}
+                <tr>
+                    <td>{{this.leagueRule}}</td>
+                    <td>{{this.rulePoints}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

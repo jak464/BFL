@@ -47,7 +47,7 @@ module.exports = function displayEpisodeList(req, res) {
                     });
 
                     callback();
-                });
+                }).sort({episodeNumber: 'ascending'});
             }], function (err) {
             // return the manageLeagueView displaying the episodes associated to the league
             if(leagueId) {

@@ -1,4 +1,4 @@
-Instructions on how to run BFL:
+Instructions on How to Run BFL:
 
 1). Download 'BFL' to desired location
 
@@ -10,7 +10,7 @@ Instructions on how to run BFL:
 
 4). Go to http://localhost:3000 in the browser
 
-5). You'll want to create a league first, which requires you to login through google. 
+5). Create a league first (you'll have to login through google)
 
 6). After you login, Create a League with a 'Name'
 
