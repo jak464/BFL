@@ -24,8 +24,8 @@ router.get('/', function(req, res) {
   res.render('homeView', {user: req.user});
 });
 
-router.get('/createLeagueView', createLeagueView);
-router.post('/createLeague', createLeague);
+router.get('/createLeagueView', ensureAuthenticated, createLeagueView);
+router.post('/createLeague',ensureAuthenticated, createLeague);
 router.get('/createLeagueRuleView', ensureAuthenticated, createLeagueRulesView);
 router.post('/createLeagueRules/:leagueId', createLeagueRules);
 router.get('/findLeagueView', findLeagueView);
