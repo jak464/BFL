@@ -18,7 +18,7 @@ module.exports =
                     id: league._id
                 }
             });
-            console.log(!results.length);
+
             if(results.length == 0) {
                 res.render('createLeagueView', {
                     user: req.user});

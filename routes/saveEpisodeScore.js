@@ -23,9 +23,7 @@ module.exports = function saveEpisodeScore(req, res) {
     var contestantScores = [];
     var leagueMemberIds = [];
     var draftPicksModel = [];
-
-    console.log(req.body);
-
+    
     async.series([
             function (callback) {
 
@@ -177,8 +175,6 @@ module.exports = function saveEpisodeScore(req, res) {
                         }
                     }
                 }
-
-
 
                 callback();
 

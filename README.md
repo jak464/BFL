@@ -2,6 +2,8 @@ Instructions on how to run BFL:
 
 1). Download 'BFL' to desired location
 
+2). Start mongoDb by running 'mongod' on the command line
+
 2). Run 'node createContestants.js' to populate the contestants in the database
 
 3). Run app.js
